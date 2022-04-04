@@ -1,9 +1,16 @@
 gsap.registerPlugin(ScrollTrigger);
 console.clear();
 
+
+
+
+
+
+
 //  =============  xxxxx  ==========================
 const cowOneAnimation = new TimelineMax({ repeat: -1 });
 const cowTwoAnimation = new TimelineMax({ repeat: -1 });
+
 cowOneAnimation
   // head
   .to(".cow-head-1", 2, {
@@ -154,6 +161,12 @@ cowTwoAnimation
     rotation: 0,
     transformOrigin: "right top",
   });
+
+
+
+
+
+
 //.to(".cow-tail-1", 1, { rotation: 40, transformOrigin: "left top" });
 // TweenMax.to(".cow-tail-1", 1, {
 //   ,
@@ -268,6 +281,7 @@ function onMouseWheel(event) {
 
   if (delta < -1) {
     //scrolling down -> next slide
+ 
     if (!moveSlideTL.isActive()) {
       var slideFrom = $(".slide.active"),
         sectionToIndex = slides.index(slideFrom);
@@ -279,8 +293,11 @@ function onMouseWheel(event) {
     }
   } else if (delta > 1) {
     // -> prev
+animations[1].reverse()
     if (!moveSlideTL.isActive()) {
+ 
       if (!moveSlideTL.isActive()) {
+       
         var slideFrom = $(".slide.active"),
           sectionToIndex = slides.index(slideFrom);
 
@@ -360,7 +377,7 @@ function moveToSlide(slideFrom, slideTo) {
         duration: 0,
         className: "slide active",
       })
-      .to(slideFrom, { autoAlpha: 0, duration: 0, className: "slide" }, 0)
+      .to(slideFrom, { autoAlpha: 0, duration:0, className: "slide" }, 0)
       .set(slideFrom, { xPercent: 0 });
   } else {
     moveSlideTL = gsap
@@ -372,7 +389,7 @@ function moveToSlide(slideFrom, slideTo) {
       .to(slideTo, { autoAlpha: 1, xPercent: 0, duration: 0 })
       .to(
         slideFrom,
-        { autoAlpha: 0, xPercent: 0, duration: 0, className: "slide" },
+        { autoAlpha: 0, xPercent: 0, duration: 1, className: "slide" },
         0
       );
   }
@@ -382,9 +399,9 @@ function setActiveSlide(active, last) {
   var currentSlideIndex = slides.index(active);
   var lastSlideIndex = slides.index(last);
 
-  animations[currentSlideIndex].reversed(false);
+animations[currentSlideIndex].reversed(false);
   animations[lastSlideIndex].progress(0).reversed(true);
-
+  
   gsap.to(".navDot.active", { opacity: 0.5, scale: 1 });
   $(".navDot.active").removeClass("active");
   $(".navDot").eq(currentSlideIndex).addClass("active");
@@ -476,14 +493,6 @@ init();
 // })
 
 // /* Clouds  */
-// let clouds = gsap.timeline();
-// ScrollTrigger.create({
-//     animation: clouds,
-//     trigger: ".scrollElement",
-//     start: "top top",
-//     end: "70% 100%",
-//     scrub: 1,
-// });
 
 // clouds.to("#cloud1", { x: 500 }, 0)
 // clouds.to("#cloud2", { x: 1000 }, 0)
@@ -619,3 +628,6 @@ init();
 //reset scrollbar position after refresh
 
 /////////////////https://codepen.io/mikeK/pen/NWPJeyg?editors=0010
+
+
+
