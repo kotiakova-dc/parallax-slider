@@ -10,6 +10,9 @@ console.clear();
 //  =============  xxxxx  ==========================
 const cowOneAnimation = new TimelineMax({ repeat: -1 });
 const cowTwoAnimation = new TimelineMax({ repeat: -1 });
+const cowThreeAnimation = new TimelineMax({ repeat: -1 });
+const cowFourAnimation = new TimelineMax({ repeat: -1 });
+const cowSmAnimation = new TimelineMax({ repeat: -1 });
 
 cowOneAnimation
   // head
@@ -163,8 +166,61 @@ cowTwoAnimation
   });
 
 
+cowThreeAnimation
+.to(".cow-head-3", 1, {
+  rotation: 20,
+  x:18,
+  y:5,
+ delay: 1.5,
+  transformOrigin: "right top",
+}).to(".cow-head-3", 1, {
+  rotation: 0,
+  x:0,
+  y:0,
+delay: 3,
+  transformOrigin: "right top",
+})
 
+cowFourAnimation
+.to(".cow-head-4", 1, {
+  rotation: -30,
+  x:-14,
+  y:5,
+ delay: 3,
+  transformOrigin: "left top",
+}).to(".cow-head-4", 1, {
+  rotation: 0,
+  x:0,
+  y:0,
+delay: 1,
 
+})
+
+cowSmAnimation
+
+.to(".cows-head-sm1", 1, {
+  rotation: -10,
+x:-3,
+ //delay: 3,
+  transformOrigin: "left top",
+}).to(".cows-head-sm1", 1, {
+  rotation: 0,
+  x:0,
+  y:0,
+
+}
+).to(".cows-head-sm2", 1, {
+  rotation: -2,
+  x:-2,
+  y:-1,
+ //delay: 3,
+  transformOrigin: "right top",
+},"-=1.9").to(".cows-head-sm2", 1, {
+  rotation: 0,
+  x:0,
+  y:0,
+//delay: 1,
+})
 
 
 //.to(".cow-tail-1", 1, { rotation: 40, transformOrigin: "left top" });
@@ -214,33 +270,75 @@ let speed = 100;
 animations[0].from("#slide01 .grass1", {
   yPercent: 100,
   duration: 2,
-});
+})
 
 animations[1]
-  .to("#slide02 .scene1", {
-    scale: 2,
+ .to("#slide02 .scene1", {
+   scale: 2,
     yPercent: -30,
     duration: 2,
+    overwrite: true,
   })
-  .reverse()
-
+  .to("#slide02 .cows-container", {
+    scale: 2.5,
+     duration: 2,
+     yPercent:-30,
+   },"-=1.9")  
+   .to(
+     "#slide02 .grass1",
+     {
+       yPercent:100,
+       duration: 2,
+     },
+     "-=1.9"
+   )
   .to(
-    "#slide02 .grass1",
+    "#slide02 .grass2",
     {
-      yPercent: 100,
-      duration: 1,
+      yPercent:0,
+      duration: 2,
+      ease: "power2.in",
     },
     "-=1.9"
   )
-  .from(
-    "#slide02 .grass2",
-    {
-      yPercent: 100,
-      duration: 2,
-    },
-    "-=1.9"
-  );
 
+
+ 
+  // animations[2]
+  // .to("#slide03 .scene1", {
+  //   scale: 2,
+  //    yPercent: -30,
+  //    duration: 2,
+  //    overwrite: true,
+  //  })
+  //  .to("#slide03 .cows-container", {
+  //    scale: 2.5,
+  //     duration: 2,
+  //     yPercent:-30,
+  //   },"-=1.9")  
+  //   .to(
+  //     "#slide03 .grass1",
+  //     {
+  //       yPercent:0,
+  //       duration: 2,
+  //     },
+  //     "-=1.9"
+  //   )
+  //  .to(
+  //    "#slide03 .grass2",
+  //    {
+  //      yPercent:0,
+  //      duration: 2,
+  //    },
+  //    "-=1.9"
+  //  ).reverse()
+ 
+ 
+   
+ 
+//    .
+//    reverse()
+  
 // .from(".apple", {
 //   xPercent: -200,
 //   duration: 0.6,
@@ -257,18 +355,22 @@ animations[1]
 //   ease: "elastic.out(0.5, 0.4)",
 // })
 
-animations[2]
-  .from("#slide03 .lines", { y: 30, autoAlpha: 0, duration: 1 })
-  //.set("#slide03 span", { color: "green" })
-  .reverse();
+// animations[2]
+// .to("#slide03 .scene1", {
+//   scale: 2,
+//   yPercent: -30,
+//   duration: 2,
+// })
+// .reverse()
 
-animations[3]
-  .from("#slide04 .lines", {
-    scale: 0.2,
-    transformOrigin: "center",
-    duration: 2,
-  })
-  .reverse();
+
+// animations[3]
+//   .from("#slide04 .lines", {
+//     scale: 0.2,
+//     transformOrigin: "center",
+//     duration: 2,
+//   })
+//   .reverse();
 
 // ===========================
 
@@ -281,26 +383,51 @@ function onMouseWheel(event) {
 
   if (delta < -1) {
     //scrolling down -> next slide
- 
+  
     if (!moveSlideTL.isActive()) {
+  
+      animations[0].reverse()
+   animations[1].reverse()
+   //animations[2].reverse()
+
+ 
+   
       var slideFrom = $(".slide.active"),
-        sectionToIndex = slides.index(slideFrom);
+     sectionToIndex = slides.index(slideFrom);
 
       if (sectionToIndex !== slides.length - 1) {
+
+
+
         slideTo = slides.eq(sectionToIndex + 1);
         moveToSlide(slideFrom, slideTo);
       }
     }
   } else if (delta > 1) {
     // -> prev
-animations[1].reverse()
+
     if (!moveSlideTL.isActive()) {
  
       if (!moveSlideTL.isActive()) {
-       
+
+      animations[0].reverse()
+
+  // animations[2].reverse()
+
+
+ 
         var slideFrom = $(".slide.active"),
           sectionToIndex = slides.index(slideFrom);
-
+ if(sectionToIndex === 2) {
+  animations[1].reverse(0)
+// animations[sectionToIndex].from("#slide02 .grass2", {
+  
+// yPercent:-100
+//  }).to("#slide02 .grass2", {
+  
+//   yPercent:0
+//    })
+  }
         if (sectionToIndex != 0) {
           slideTo = slides.eq(sectionToIndex - 1);
           moveToSlide(slideFrom, slideTo);
@@ -362,7 +489,7 @@ function prevClick() {
 // ==============================
 function moveToSlide(slideFrom, slideTo) {
   gsap.set(".go", { autoAlpha: 0 }); // ????
-
+animations[slides.index(slideFrom)].reverse()
   if (slides.index(slideFrom) < slides.index(slideTo)) {
     // vorwärts
 
@@ -389,7 +516,7 @@ function moveToSlide(slideFrom, slideTo) {
       .to(slideTo, { autoAlpha: 1, xPercent: 0, duration: 0 })
       .to(
         slideFrom,
-        { autoAlpha: 0, xPercent: 0, duration: 1, className: "slide" },
+        { autoAlpha: 1, xPercent: 0, duration: 2, className: "slide" },
         0
       );
   }
